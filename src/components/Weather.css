@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+body{
+    font-family: "Roboto", sans-serif;
+}
+
+.weather{
+    width: 90;
+    max-width: 420px;
+    place-self: center;
+    padding: 40px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background-image: linear-gradient(120deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.3));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.searchBar{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.searchBar input{
+    height: 50px;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    padding-left: 25px;
+    color: #626262;
+    font-size: 18px;
+ 
+}
+
+.searchBar img{
+    width: 50px;
+    padding: 15px;
+    border-radius: 50%;
+    background: #ebfffc;
+    cursor: pointer;
+}
+
+.searchBar img:hover{
+    background: transparent;
+    backdrop-filter: blur(20px);
+}
+
+.weatherIcon{
+    width: 150px;
+    margin: 30px 0;
+}
+
+.temp{
+    color: #fff;
+    font-size: 80px;
+    line-height: 1;
+}
+
+.location{
+    color: #fff;
+    font-size: 40px;
+}
+
+.weatherData{
+    width: 100%;
+    margin-top: 40px;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+}
+
+.weatherData .col{
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 22px;
+}
+
+.weatherData .col img{
+    width: 26px;
+    margin-top: 10px;
+}
+
+.weatherData .col span{
+    display: block;
+    font-size: 16px;
+}
+
+.weatherData .suggestions{
+    display: flex;
+    flex-direction: column;
+}
+
+ul{
+    color: rgb(10, 10, 10);
+    font-size: 1.2rem;
+    font-weight: 900;
+    margin-top: 10px;
+    margin-left: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    
+
+}
+
+li{
+    margin-bottom: 10px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 3px 10px;
+    align-self: stretch;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+li:hover{
+    background: transparent;
+    backdrop-filter: blur(20px);
+}
+
+.loader{
+    border: 6px solid rgba(255, 255, 255, 0.1);
+    border-top: 6px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin{
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.searchBar img,
+li {
+    transition: all 0.3s ease;
+}
