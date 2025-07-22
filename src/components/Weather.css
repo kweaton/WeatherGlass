@@ -147,3 +147,44 @@ li:hover{
 li {
     transition: all 0.3s ease;
 }
+
+.scrollbar{
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+    padding: 20px 0;
+    margin-top: 20px;
+    gap: 16px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+}
+
+.scrollbar::-webkit-scrollbar{
+    height: 8px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+
+}
+
+.forecastDay{
+    flex: 0 0 auto;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    scroll-snap-align: start;
+    backdrop-filter: blur(10px);
+    width: 110px;
+    color: #fff;
+   
+}
+.forecastImg{
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    margin: 8px 0;
+}

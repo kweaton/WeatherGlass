@@ -19,6 +19,17 @@ function Weather(){
     function handleCity(e){
         setCityName(e.target.value);
     }
+    function getWindDirection(degree) {
+  if (degree >= 340 || degree < 20) return "N";
+  if (degree >= 20 && degree < 60) return "NE";
+  if (degree >= 60 && degree < 120) return "E";
+  if (degree >= 120 && degree < 160) return "SE";
+  if (degree >= 160 && degree < 200) return "S";
+  if (degree >= 200 && degree < 240) return "SW";
+  if (degree >= 240 && degree < 290) return "W";
+  if (degree >= 290 && degree < 340) return "NW";
+  return "";
+    }
 
     const allIcons = {
         "01d": sun_icon,
@@ -27,8 +38,8 @@ function Weather(){
         "02n": cloudy_icon,
         "03d": cloudy_icon,
         "03n": cloudy_icon,
-        "04d": rain_icon,
-        "04n": rain_icon,
+        "04d": cloudy_icon,
+        "04n": cloudy_icon,
         "09d": rain_icon,
         "09n": rain_icon,
         "10d": rain_icon,
@@ -36,6 +47,7 @@ function Weather(){
         "13d": snow_icon,
         "13n": snow_icon
     }
+
     const search = async(city) =>{
         if(city === "")
         {
@@ -54,13 +66,29 @@ function Weather(){
                 return;
             }
             console.log(data);
+
+            const furl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${apiKey}`;
+            const res = await fetch(furl);
+            const fdata = await res.json();
+
+            if(!res.ok){
+                alert(data.message);
+                return;
+            }
+            const forecasts = [fdata.list[3], fdata.list[11], fdata.list[19], fdata.list[27], fdata.list[35]]
+            console.log(forecasts);
             const icon = allIcons[data.weather[0].icon] || sun_icon;
+            const windData = data.wind.deg;
+            console.log(windData);
+            const windD = getWindDirection(windData);
             setWeatherData({
                 humidity: data.main.humidity,
                 windSpeed: data.wind.speed,
                 temperature: Math.floor(data.main.temp),
                 location: data.name,
-                icon: icon
+                icon: icon,
+                forecastList: forecasts,
+                windDirection: windD
             })
         } catch (error) {
             setWeatherData(false);
@@ -91,8 +119,7 @@ function Weather(){
     }, [debouncedQuery]);
     
     const handleSelect = (city) =>{
-        setCityName(city.name);
-        search(city.name);
+        setCityName(city.name + ", " + city.state + ", " + city.country);
     }
 
     
@@ -119,6 +146,16 @@ function Weather(){
             <img src={weatherData.icon} alt="sun" className="weatherIcon" />
             <p className="temp">{weatherData.temperature}°</p>
             <p className="location">{weatherData.location}</p>
+            <div className="scrollbar">
+                {weatherData.forecastList.map((day, index) => (
+                    
+                    <div className="forecastDay" key={index}>
+                        <p>{new Date(day.dt_txt).toLocaleDateString('en-US', {weekday: 'long'})}</p>
+                        <img src={allIcons[day.weather[0].icon]} className="forecastImg"/>
+                        <p>{Math.floor(day.main.temp)}</p>
+                    </div>
+                ))}
+            </div>
             <div className="weatherData">
                 <div className="col">
                     <img src={humidity_icon} alt="" />
@@ -130,7 +167,7 @@ function Weather(){
                 <div className="col">
                     <img src={wind_icon} alt="" />
                     <div>
-                        <p>{weatherData.windSpeed}</p>
+                        <p>{weatherData.windSpeed} {weatherData.windDirection}</p>
                         <span>Wind Speed</span>
                     </div>
                 </div>
